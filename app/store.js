@@ -1,31 +1,43 @@
 /**
  * Create the store with asynchronously loaded reducers
  */
-
+/* eslint-env browser */
 import { createStore, applyMiddleware, compose } from 'redux';
 import { fromJS } from 'immutable';
+import { createLogger } from 'redux-logger';
+import createSagaMiddleware from 'redux-saga';
 import createReducer from './reducers';
+import rootSaga from './sagas';
 
 const devtools = window.devToolsExtension || (() => noop => noop);
 
-export default function configureStore(initialState = {}, history) {
+export default function configureStore(initialState = {}) {
   // Create the store with middlewares
-  // 1. routerMiddleware: Syncs the location/URL path to the state
-  const middlewares = [
 
+  // Logger for redux actions and actioncreators on console
+  const reduxLogger = createLogger({
+    stateTransformer: state => JSON.parse(JSON.stringify(state)),
+  });
+
+  const sagaMiddleware = createSagaMiddleware();
+
+  const middlewares = [
+    sagaMiddleware,
+    reduxLogger,
   ];
 
   const enhancers = [
     applyMiddleware(...middlewares),
-    devtools(),
   ];
 
   const store = createStore(
     createReducer(),
     fromJS(initialState),
-    compose(...enhancers)
+    compose(...enhancers),
+    devtools,
   );
 
+  sagaMiddleware.run(rootSaga);
   // Make reducers hot reloadable, see http://mxs.is/googmo
   /* istanbul ignore next */
   if (module.hot) {
