@@ -11,6 +11,6 @@ import { fromJS } from 'immutable';
  */
 export default function createReducer(asyncReducers) {
   return combineReducers({
-    ...asyncReducers,
+    rootReducer: () => ('root'),
   });
 }

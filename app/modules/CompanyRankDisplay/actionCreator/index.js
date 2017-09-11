@@ -1,3 +1,3 @@
 export const initialFetchRequest = () => ({
-  type: 'COMPANY_RANK_DISPLAY_INITIAL_FETCH_REQUEST',
+  type: 'COMPANY_INITIAL_FETCH',
 });

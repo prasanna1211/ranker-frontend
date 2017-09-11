@@ -1,6 +1,10 @@
 import { connect } from 'react-redux';
 import CompanyRankDisplay from '../components/index.jsx';
 
+import {
+  initialFetchRequest,
+} from './actionCreator/index'
+
 const mapStateToProps = state => ({
 
 });
