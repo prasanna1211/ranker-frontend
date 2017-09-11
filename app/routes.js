@@ -6,8 +6,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Route, BrowserRouter as Router } from 'react-router-dom';
-
-
+import CompanyRankDisplay from './modules/CompanyRankDisplay/components/index.jsx';
 
 /*
  * A Route can have one of the three below
@@ -16,18 +15,12 @@ import { Route, BrowserRouter as Router } from 'react-router-dom';
  * c. Children - Always be rendered which are matching.
  */
 
-const Home = () => (
-  <div>
-    Home
-  </div>
-);
-
 class Routes extends React.Component {
   render() {
     return (
       <Router>
         <div>
-          <Route path="/home" component={Home} />
+          <Route path="/company" component={CompanyRankDisplay} />
         </div>
       </Router>
     );

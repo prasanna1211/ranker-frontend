@@ -13,8 +13,8 @@ module.exports = (options) => ({
   }, options.output), // Merge with env dependent settings
   module: {
     loaders: [{
-      test: /\.js$/, // Transform all .js files required somewhere with Babel
-      loader: 'babel',
+      test: /\.(js|jsx)$/, // Transform all .js files required somewhere with Babel
+      loader: 'babel-loader',
       exclude: /node_modules/,
       query: options.babelQuery,
     }, {
@@ -33,7 +33,7 @@ module.exports = (options) => ({
       loader: 'style!css!autoprefixer-loader',
     }, {
       test: /\.scss$/,
-      loader: 'style!css!autoprefixer-loader!sass',
+      loader: 'style-loader!css-loader!autoprefixer-loader!sass-loader',
     }, {
       test: /\.html$/,
       loader: 'html-loader',
@@ -60,18 +60,12 @@ module.exports = (options) => ({
   resolve: {
     modules: ['app', 'node_modules'],
     extensions: [
-      '',
       '.js',
       '.jsx',
       '.react.js',
-    ],
-    packageMains: [
-      'jsnext:main',
-      'main',
     ],
   },
   devtool: options.devtool,
   target: 'web', // Make web variables accessible to webpack, e.g. window
   stats: false, // Don't show stats in the console
-  progress: true,
 });
