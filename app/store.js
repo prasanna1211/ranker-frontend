@@ -4,8 +4,9 @@
 /* eslint-env browser */
 import { createStore, applyMiddleware, compose } from 'redux';
 import { fromJS } from 'immutable';
-import { createLogger } from 'redux-logger';
+
 import createSagaMiddleware from 'redux-saga';
+import { createLogger } from 'redux-logger';
 import createReducer from './reducers';
 import rootSaga from './sagas';
 
