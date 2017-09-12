@@ -26,6 +26,6 @@ function* fetch(action) {
   }
 }
 
-export default function* postAndFetchInsulinDose() {
+export default function* saga() {
   yield takeEvery('COMMON_INITIAL_FETCH', fetch);
 }
