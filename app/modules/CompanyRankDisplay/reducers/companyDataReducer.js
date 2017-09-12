@@ -9,10 +9,11 @@ const commonDataInitialState = Map({
 });
 
 const onHtInitialFetchSuccess = (state, { payload }) => {
-  let newState = state;
-  newState = newState.setIn(['companyRanksData'], fromJS(payload.companyRankData));
-  newState = newState.setIn(['isFetched'], true);
-  return newState;
+  return state
+    .setIn(['companyRanksData'], fromJS(payload.companyRankData))
+    .setIn(['gapBetweenRecords'], fromJS(payload.gapBetweenRecords))
+    .setIn(['numberOfRecords'], fromJS(payload.numberOfRecords))
+    .setIn(['startDate'], payload.startDate);
 };
 
 export default createReducer(commonDataInitialState, {

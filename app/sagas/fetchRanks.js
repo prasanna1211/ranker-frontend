@@ -12,18 +12,26 @@ const getConfigForGet = (url) => ({
 function* fetch(action) {
   try {
 
+    const {
+      payload: {
+        numberOfRecords,
+        gapBetweenRecords,
+        startDate,
+      }
+    } = action;
     const apiData = yield call(request, getConfigForGet(getRanks(action.payload)));
-    console.log(apiData)
     const {
       data: {
         result: companyRankData,
       }
     } = apiData;
-
     yield put({
       type: 'COMPANY_FETCH_RANKS_SUCCESS',
       payload: {
         companyRankData,
+        numberOfRecords,
+        gapBetweenRecords,
+        startDate,
       },
     });
   } catch (e) {
