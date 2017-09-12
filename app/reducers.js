@@ -6,11 +6,13 @@
 import { combineReducers } from 'redux-immutable';
 import { fromJS } from 'immutable';
 
+import apiDataReducer from './modules/common/reducers/apiDataReducer/index.js';
+
 /**
  * Creates the main reducer with the asynchronously loaded ones
  */
 export default function createReducer(asyncReducers) {
   return combineReducers({
-    rootReducer: () => ('root'),
+    apiData: apiDataReducer,
   });
 }

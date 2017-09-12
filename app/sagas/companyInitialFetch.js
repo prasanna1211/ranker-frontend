@@ -1,7 +1,9 @@
 /* global localStorage */
-import { takeEvery, put, call, select } from 'redux-saga/effects';
+import { take, takeEvery, put, call, select } from 'redux-saga/effects';
 import request from 'axios';
 import { getDomains } from '../api';
+
+const commonDataIsFetchedSelector = state => state.getIn(['apiData', 'commonData', 'isFetched']);
 
 const getConfigForGet = (url) => ({
   method: 'GET',
@@ -10,13 +12,17 @@ const getConfigForGet = (url) => ({
 
 function* fetch(action) {
   try {
-    const domainData = yield call(request, getConfigForGet(getDomains()));
-    const { data: allDomains } = domainData;
+    const commonDataNotYetFetched = yield select(commonDataIsFetchedSelector);
+
+    if (!commonDataNotYetFetched) {
+      yield put({
+        type: 'COMMON_INITIAL_FETCH',
+      });
+      yield take('COMMON_INITIAL_FETCH_SUCCESS');
+    }
+
     yield put({
       type: 'COMPANY_INITIAL_FETCH_SUCCESS',
-      payload: {
-        allDomains,
-      },
     });
   } catch (e) {
     console.log(e);
