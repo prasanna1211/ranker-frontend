@@ -13,8 +13,12 @@ function* fetch(action) {
   try {
 
     const apiData = yield call(request, getConfigForGet(getRanks(action.payload)));
-
-    const { data: companyRankData } = apiData;
+    console.log(apiData)
+    const {
+      data: {
+        result: companyRankData,
+      }
+    } = apiData;
 
     yield put({
       type: 'COMPANY_FETCH_RANKS_SUCCESS',

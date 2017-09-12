@@ -1,28 +1,34 @@
 import { Map, List, fromJS } from 'immutable';
+import { combineReducers } from 'redux';
+
 import reduce from 'lodash/reduce';
+
+import companyRankDataReducer from '../../../CompanyRankDisplay/reducers/companyDataReducer';
 import createReducer from '../../../../helpers/createReducer';
 
-const initialState = Map({
-  commonData: Map({
-    isFetched: false,
-  }),
-  insulinDosesData: Map(),
+const commonDataInitialState = Map({
+  isFetched: false,
 });
 
 const onHtInitialFetch = (state, { payload }) => {
   let newState = state;
-  newState = newState.setIn(['commonData', 'isFetched'], false);
+  newState = newState.setIn(['isFetched'], false);
   return newState;
 };
 
 const onHtInitialFetchSuccess = (state, { payload }) => {
   let newState = state;
-  newState = newState.setIn(['commonData', 'domainData'], fromJS(payload.allDomains));
-  newState = newState.setIn(['commonData', 'isFetched'], true);
+  newState = newState.setIn(['domainData'], fromJS(payload.allDomains));
+  newState = newState.setIn(['isFetched'], true);
   return newState;
 };
 
-export default createReducer(initialState, {
+const commonDataReducer = createReducer(commonDataInitialState, {
   COMMON_INITIAL_FETCH: onHtInitialFetch,
   COMMON_INITIAL_FETCH_SUCCESS: onHtInitialFetchSuccess,
+});
+
+export default combineReducers({
+  commonData: commonDataReducer,
+  companyData: companyRankDataReducer,
 });
