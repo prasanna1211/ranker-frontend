@@ -8,8 +8,12 @@ import {
   fetchRanksForCompanies,
 } from './actionCreator/index';
 
-const mapStateToProps = state => ({
+import {
+  getRankData,
+} from './selectors/index';
 
+const mapStateToProps = state => ({
+  rankData: getRankData(state),
 });
 
 const mapDispatchToProps = dispatch => ({

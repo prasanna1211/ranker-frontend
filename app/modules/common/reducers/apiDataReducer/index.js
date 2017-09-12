@@ -1,5 +1,5 @@
 import { Map, List, fromJS } from 'immutable';
-import { combineReducers } from 'redux';
+import { combineReducers } from 'redux-immutable';
 
 import reduce from 'lodash/reduce';
 
