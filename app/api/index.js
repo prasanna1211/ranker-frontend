@@ -1,5 +1,5 @@
-const baseDomain = 'http://localhost:3000';
+const baseDomain = 'http://localhost:1212';
 
 const bindBaseUrl = (baseUrl, api) => (`${baseUrl}${api}`);
 
-export const getDomains = bindBaseUrl('/api/domains/');
+export const getDomains = () => bindBaseUrl(baseDomain, '/api/domains/');
