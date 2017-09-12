@@ -6,7 +6,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Route, BrowserRouter as Router } from 'react-router-dom';
-import CompanyRankDisplay from './modules/CompanyRankDisplay/components/index.jsx';
+import CompanyRankDisplay from './modules/CompanyRankDisplay';
 
 /*
  * A Route can have one of the three below
