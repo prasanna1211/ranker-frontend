@@ -11,7 +11,7 @@ class CompanyRankDisplay extends React.Component {
 
   componentDidMount() {
     this.props.initialFetch();
-    this.props.fetchRanks('Codebrahma', 'React', '2017-09-10', 15, 1, 'https://www.google.co.in');
+    this.props.fetchRanks('Codebrahma', 'React', '2017-09-13', 15, 1, 'https://www.google.co.in');
   }
 
   render() {

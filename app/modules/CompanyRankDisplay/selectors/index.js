@@ -53,7 +53,19 @@ export const getRankData = createSelector([getGap, getNumberOfRecords, getStartD
             accumulator = !accumulator.getIn([keyword]) ? accumulator.setIn([keyword], List()) : accumulator.setIn([keyword], accumulator.getIn([keyword]).push(List([keyword, date, rank])));
           });
         return accumulator;
-      }, Map());
-    return result;
+      }, Map())
+      .toList()
+
+      return result
+        .toSeq()
+        .map((keyword) => {
+          return keyword
+            .toSeq()
+            .sort(
+              (a, b) => (a.getIn([1]) < b.getIn([1]))
+            )
+            .toList();
+        })
+        .toList();
   }
 });
