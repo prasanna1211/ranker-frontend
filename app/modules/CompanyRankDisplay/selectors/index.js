@@ -2,6 +2,7 @@ import { Map, List, fromJS, Iterable } from 'immutable';
 import { createSelector } from 'reselect';
 
 import times from 'lodash/times';
+import isUndefined from 'lodash/isUndefined';
 
 import moment from 'moment';
 
@@ -11,7 +12,6 @@ const getStartDate = state => state.getIn(['apiData', 'companyData', 'startDate'
 const getCompanyRanksData = state => state.getIn(['apiData', 'companyData', 'companyRanksData']);
 
 const getEmptyRankTable = (keys, startDate, daysCount, gap) => {
-  console.log(keys, startDate, daysCount, gap);
   const startDateMoment = moment(startDate, 'YYYY-MM-DD');
   let count = 0;
   let result = Map();
@@ -40,25 +40,20 @@ export const getRankData = createSelector([getGap, getNumberOfRecords, getStartD
 
     const emptyData = getEmptyRankTable(keys, startDate, daysCount, gap);
 
-    const result = rankData
+    let result = rankData
       .toSeq()
       .reduce((accumulator, data) => {
         const currentDate = moment(data.get('logDate')).format('YYYY-MM-DD');
         return accumulator.setIn([currentDate, data.get('keyword')], data.get('rank'));
       }, emptyData)
-      .map((value, key) => {
-        return fromJS({
-          date: key,
-          keywords: value
+      .reduce((accumulator, keywords, date) => {
+        keywords
           .toSeq()
-          .map((rank, keyword) => ({
-            keyword,
-            rank,
-          }))
-          .toList(),
-        });
-      });
-    console.log('result', result.toList());
+          .forEach((rank, keyword, index) => {
+            accumulator = !accumulator.getIn([keyword]) ? accumulator.setIn([keyword], List()) : accumulator.setIn([keyword], accumulator.getIn([keyword]).push(List([keyword, date, rank])));
+          });
+        return accumulator;
+      }, Map());
     return result;
   }
 });
