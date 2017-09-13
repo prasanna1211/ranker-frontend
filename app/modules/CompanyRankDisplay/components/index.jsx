@@ -1,5 +1,8 @@
 import React from 'react';
 
+import returnIfPossible from '../../../helpers/returnIfPossible';
+import Table from '../../common/presentational/Table';
+
 class CompanyRankDisplay extends React.Component {
 
   constructor(props) {
@@ -12,9 +15,14 @@ class CompanyRankDisplay extends React.Component {
   }
 
   render() {
+    const {
+      rankData
+    } = this.props;
     return (
       <div>
-        Company Rank Display
+        <Table
+          data={returnIfPossible(rankData) ? rankData.toJS() : {}}
+        />
       </div>
     );
   }
