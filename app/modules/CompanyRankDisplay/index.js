@@ -12,9 +12,13 @@ import {
   getRankData,
 } from './selectors/index';
 
-const mapStateToProps = state => ({
-  rankData: getRankData(state),
-});
+const mapStateToProps = state => {
+	return {
+	  rankData: getRankData(state),
+	  domainData: state.getIn(['apiData', 'commonData', 'domainData']),
+	  isFetched: state.getIn(['apiData', 'commonData', 'isFetched'])
+	}
+};
 
 const mapDispatchToProps = dispatch => ({
   initialFetch: bindActionCreators(initialFetchRequest, dispatch),
