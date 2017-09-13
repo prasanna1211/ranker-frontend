@@ -39,13 +39,26 @@ export const getRankData = createSelector([getGap, getNumberOfRecords, getStartD
       }, List())
 
     const emptyData = getEmptyRankTable(keys, startDate, daysCount, gap);
-    console.log(rankData);
+
     const result = rankData
       .toSeq()
       .reduce((accumulator, data) => {
         const currentDate = moment(data.get('logDate')).format('YYYY-MM-DD');
         return accumulator.setIn([currentDate, data.get('keyword')], data.get('rank'));
-      }, emptyData);
+      }, emptyData)
+      .map((value, key) => {
+        return fromJS({
+          date: key,
+          keywords: value
+          .toSeq()
+          .map((rank, keyword) => ({
+            keyword,
+            rank,
+          }))
+          .toList(),
+        });
+      });
+    console.log('result', result.toList());
     return result;
   }
 });
