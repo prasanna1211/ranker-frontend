@@ -1,5 +1,13 @@
 :local(.table) {
-  td.cell-value {
-    width: 50px;
+  .row {
+    height: 2rem;
+    td {
+      &.row-title {
+        font-weight: bolder;
+      }
+      &.cell-value {
+        width: 3rem;
+      }
+    }
   }
 }
