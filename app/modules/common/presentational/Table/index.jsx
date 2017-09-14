@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 
 import map from 'lodash/map';
 import capitalize from 'lodash/capitalize';
@@ -6,6 +7,7 @@ import capitalize from 'lodash/capitalize';
 import styles from './styles.scss';
 
 const Table = ({ data }) => {
+  console.log(data);
   const renderRow = (row) => {
     return (
       <td className="cell-value" key={Math.random()}>
@@ -16,6 +18,16 @@ const Table = ({ data }) => {
 
   return (
     <table className={styles['table']}>
+      <thead>
+        <td></td>
+        {
+          map(data[0], value => (
+            <td>
+              {moment(value[1]).format('DD/MM ddd')}
+            </td>
+          ))
+        }
+      </thead>
       <tbody>
         {
           map(data, (value) => {
