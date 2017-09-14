@@ -56,16 +56,26 @@ export const getRankData = createSelector([getGap, getNumberOfRecords, getStartD
       }, Map())
       .toList()
 
-      return result
+      const ret = result
         .toSeq()
         .map((keyword) => {
-          return keyword
+          const temp = keyword
             .toSeq()
             .sort(
-              (a, b) => (a.getIn([1]) < b.getIn([1]))
+              (a, b) => {
+                // console.log(a.getIn([1]), b.getIn([1]), (a.getIn([1]) < b.getIn([1])));
+                return b.getIn([1]).localeCompare(a.getIn([1]));
+              }
             )
             .toList();
+          console.log('temp', temp);
+          return temp;
+        })
+        .sort((a, b) => {
+          return a.get(0) < b.get(0);
         })
         .toList();
+      console.log('ret', ret);
+      return ret;
   }
 });
