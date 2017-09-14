@@ -22,6 +22,8 @@ class CompanyRankDisplay extends React.Component {
       <div>
         <Table
           data={returnIfPossible(rankData) ? rankData.toJS() : {}}
+          width={50}
+          padding={20}
         />
       </div>
     );

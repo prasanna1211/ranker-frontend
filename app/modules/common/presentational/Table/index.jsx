@@ -6,8 +6,7 @@ import capitalize from 'lodash/capitalize';
 
 import styles from './styles.scss';
 
-const Table = ({ data }) => {
-  console.log(data);
+const Table = ({ data, width, padding }) => {
   const renderRow = (row) => {
     return (
       <td className="cell-value" key={Math.random()}>
@@ -17,12 +16,15 @@ const Table = ({ data }) => {
   }
 
   return (
-    <table className={styles['table']}>
+    <table
+      className={styles['table']}
+      style={{ width: `${width}%`, fontSize: `${width/100}rem` }}
+    >
       <thead>
         <td></td>
         {
           map(data[0], value => (
-            <td>
+            <td key={Math.random()}>
               {moment(value[1]).format('DD/MM ddd')}
             </td>
           ))
@@ -32,7 +34,7 @@ const Table = ({ data }) => {
         {
           map(data, (value) => {
             return (
-              <tr className="row">
+              <tr key={Math.random()} className="row">
                 <td className="row-title">{capitalize(value[0][0])}</td>
                 {map(value, eachDateData => renderRow(eachDateData))}
               </tr>
