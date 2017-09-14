@@ -1,5 +1,4 @@
 import React from 'react';
-import _ from 'lodash';
 import { Card, Transition, Divider, Message } from 'semantic-ui-react';
 
 import returnIfPossible from '../../../helpers/returnIfPossible';
@@ -29,16 +28,18 @@ class CompanyRankDisplay extends React.Component {
   }
 
   renderDomains(){  
-    return this.props.domainData.toJS().map((domain, index) => {
+    return this.props.domainData.toJS().map(({domain}, index) => {
       return (
-        <div>
+        <div key={index}>
           <Card
             fluid color='teal'
-            key={index}
-            header={domain.domain}
+            header={domain}
             onClick={() => this.toggleExpansion(index)}
           />
-          <Transition visible={this.state.expandedCardID === index} animation='fade down' duration={300}>
+          <Transition
+            visible={this.state.expandedCardID === index}
+            animation='fade down' duration={300}
+          >
             <Message
               info
               header={"Table need to render here"}
