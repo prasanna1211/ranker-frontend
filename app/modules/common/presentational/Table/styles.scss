@@ -1,12 +1,24 @@
+@import '../../../../styles/_colors.scss';
+
 :local(.table) {
-  .row {
-    height: 2rem;
-    td {
-      &.row-title {
-        font-weight: bolder;
-      }
-      &.cell-value {
-        width: 3rem;
+  border: 1px solid $table-border-color;
+  border-collapse: collapse;
+  tr {
+    &:nth-child(2n) {
+      background: $table-2n-background;
+    }
+    &.row {
+      height: 2rem;
+      td {
+        border: 1px solid $table-border-color;
+        border-collapse: collapse;
+        &.row-title {
+          font-weight: bolder;
+        }
+        &.cell-value {
+          text-align: center;
+          width: 5rem;
+        }
       }
     }
   }

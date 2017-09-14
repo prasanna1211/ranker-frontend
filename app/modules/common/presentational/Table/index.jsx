@@ -22,7 +22,7 @@ const Table = ({ data }) => {
             return (
               <tr className="row">
                 <td className="row-title">{capitalize(value[0][0])}</td>
-                <td className="row-value">{map(value, eachDateData => renderRow(eachDateData))}</td>
+                {map(value, eachDateData => renderRow(eachDateData))}
               </tr>
             )
           })
