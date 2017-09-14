@@ -13,7 +13,6 @@ export const getRanks = ({ domain, company, startDate, numberOfRecords, gapBetwe
   const companyQuery = `company=${company}`;
 
   const rangeEndDate = moment(startDate, 'YYYY-MM-DD');
-  console.log(numberOfRecords, gapBetweenRecords, (numberOfRecords-1) * gapBetweenRecords);
   const rangeStartDate = rangeEndDate.clone().subtract({ days: (numberOfRecords - 1) * gapBetweenRecords });
 
   const startDateQuery =`startDate=${rangeStartDate.format('YYYY-MM-DD')}`;
