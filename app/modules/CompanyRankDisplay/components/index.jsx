@@ -15,7 +15,6 @@ class CompanyRankDisplay extends React.Component {
 
   componentDidMount() {
     this.props.initialFetch();
-    this.props.fetchRanks('Codebrahma', 'React', '2017-09-13', 15, 1, 'https://www.google.co.in');
   }
 
   //Logic to expand one card at a time.
@@ -27,24 +26,35 @@ class CompanyRankDisplay extends React.Component {
     })
   }
 
-  renderDomains(){  
-    return this.props.domainData.toJS().map(({domain}, index) => {
+  handleCardClick(id, domain){
+    this.toggleExpansion(id);
+    this.props.fetchRanks('Codebrahma', domain, '2017-09-13', 15, 1, 'https://www.google.co.in');
+  }
+
+  renderDomains(){
+    let { rankData } = this.props;
+    let { expandedCardID } = this.state;
+
+    return this.props.domainData.toJS().map(({id, domain}, index) => {
       return (
         <div key={index}>
           <Card
             fluid color='teal'
             header={domain}
-            onClick={() => this.toggleExpansion(index)}
+            onClick={() => this.handleCardClick(id, domain)}
           />
           <Transition
-            visible={this.state.expandedCardID === index}
-            animation='fade down' duration={300}
+            visible={expandedCardID === id}
+            animation='fade down'
+            duration={300}
           >
-            <Message
-              info
-              header={"Table need to render here"}
-              content={"It is just markup It is just markupIt is just markupIt is just markupIt is just markupIt is just markupIt is just markupIt is just markupIt is just markupIt is just markupIt is just markupIt is just markupIt is just markupIt is just markupIt is just markup"}
-            />
+            <div>
+              <Table
+                data={returnIfPossible(rankData) ? rankData.toJS() : {}}
+                width={50}
+                padding={20}
+              />
+            </div>
           </Transition>
           <Divider hidden />
         </div>
@@ -54,15 +64,14 @@ class CompanyRankDisplay extends React.Component {
 
   render() {
     const {
-      rankData
+      isFetched
     } = this.props;
+
     return (
       <div>
-        <Table
-          data={returnIfPossible(rankData) ? rankData.toJS() : {}}
-          width={50}
-          padding={20}
-        />
+        {
+          isFetched ? this.renderDomains() : ""
+        }
       </div>
     );
   }
