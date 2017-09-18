@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Transition, Divider, Message, Segment, Loader } from 'semantic-ui-react';
+import { Card, Transition, Divider, Loader } from 'semantic-ui-react';
 
 import returnIfPossible from '../../../helpers/returnIfPossible';
 import Table from '../../common/presentational/Table';
