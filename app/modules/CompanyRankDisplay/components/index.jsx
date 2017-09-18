@@ -1,5 +1,6 @@
 import React from 'react';
-import { Card, Transition, Divider, Message } from 'semantic-ui-react';
+import { Card, Transition, Divider, Message, Segment, Loader } from 'semantic-ui-react';
+import _ from 'lodash';
 
 import returnIfPossible from '../../../helpers/returnIfPossible';
 import Table from '../../common/presentational/Table';
@@ -48,12 +49,16 @@ class CompanyRankDisplay extends React.Component {
             animation='fade down'
             duration={300}
           >
-            <div>
-              <Table
-                data={returnIfPossible(rankData) ? rankData.toJS() : {}}
-                width={50}
-                padding={20}
-              />
+            <div> 
+              {
+                returnIfPossible(rankData) ?
+                <Table
+                  data={rankData.toJS()}
+                  width={50}
+                  padding={20}
+                /> :
+                <Loader active inline='centered' />               
+              }
             </div>
           </Transition>
           <Divider hidden />
@@ -70,7 +75,7 @@ class CompanyRankDisplay extends React.Component {
     return (
       <div>
         {
-          isFetched ? this.renderDomains() : ""
+          isFetched ? this.renderDomains() : <Loader active={true} size='large'>Loading</Loader>
         }
       </div>
     );
