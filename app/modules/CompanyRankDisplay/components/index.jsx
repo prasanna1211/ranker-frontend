@@ -28,7 +28,7 @@ class CompanyRankDisplay extends React.Component {
 
   handleCardClick(id, domain){
     this.toggleExpansion(id);
-    this.props.fetchRanks('Codebrahma', domain, '2017-09-13', 15, 1, 'https://www.google.co.in');
+    this.props.fetchRanks('Codebrahma', domain, '2017-09-18', 15, 1, 'https://www.google.co.in');
   }
 
   renderDomains(){

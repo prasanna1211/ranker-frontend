@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-const baseDomain = 'http://localhost:1212';
+const baseDomain = 'http://ec2-18-220-113-251.us-east-2.compute.amazonaws.com:8080';
 
 const bindBaseUrl = (baseUrl, api) => (`${baseUrl}${api}`);
 
