@@ -1,6 +1,5 @@
 import React from 'react';
 import { Card, Transition, Divider, Message, Segment, Loader } from 'semantic-ui-react';
-import _ from 'lodash';
 
 import returnIfPossible from '../../../helpers/returnIfPossible';
 import Table from '../../common/presentational/Table';
