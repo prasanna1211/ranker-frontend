@@ -20,7 +20,7 @@ class Routes extends React.Component {
     return (
       <Router>
         <div>
-          <Route path="/company" component={CompanyRankDisplay} />
+          <Route component={CompanyRankDisplay} />
         </div>
       </Router>
     );
