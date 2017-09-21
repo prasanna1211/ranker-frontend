@@ -1,8 +1,10 @@
 import React from 'react';
-import { Card, Transition, Divider, Loader } from 'semantic-ui-react';
+import { Card, Transition, Divider, Loader, Message } from 'semantic-ui-react';
 
 import returnIfPossible from '../../../helpers/returnIfPossible';
 import Table from '../../common/presentational/Table';
+import CountDownTimer from '../../../helpers/countDownTimer';
+import { getTomorrowDate } from '../../../helpers/getTomorrowDate';
 
 class CompanyRankDisplay extends React.Component {
 
@@ -29,6 +31,10 @@ class CompanyRankDisplay extends React.Component {
   handleCardClick(id, domain){
     this.toggleExpansion(id);
     this.props.fetchRanks('Codebrahma', domain, '2017-09-18', 15, 1, 'https://www.google.co.in');
+  }
+
+  onCountDownFinished = () => {
+    window.location.reload();
   }
 
   renderDomains(){
@@ -70,11 +76,27 @@ class CompanyRankDisplay extends React.Component {
     const {
       isFetched
     } = this.props;
-
+    
     return (
       <div>
         {
-          isFetched ? this.renderDomains() : <Loader active={true} size='large'>Loading</Loader>
+          isFetched ?
+          <div>
+            <Message info>
+              <Message.Header>
+                Next update will be in&nbsp;
+                <CountDownTimer
+                  targetDate={getTomorrowDate()}
+                  timeSeparator={':'}
+                  leadingZero
+                  onFinished={this.onCountDownFinished}
+                /> 
+              </Message.Header>
+            </Message>
+
+            { this.renderDomains() }
+          </div> :
+          <Loader active={true} size='large'>Loading</Loader>
         }
       </div>
     );
