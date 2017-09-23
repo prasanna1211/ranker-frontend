@@ -1,4 +1,8 @@
 import React from 'react';
+import moment from 'moment';
+
+import map from 'lodash/map';
+import isEmpty from 'lodash/isEmpty';
 
 import { Card, Transition, Divider, Loader, Message } from 'semantic-ui-react';
 
@@ -30,9 +34,9 @@ class CompanyRankDisplay extends React.Component {
   }
 
   handleCardClick(id, domain){
-    console.log('id', id, domain);
+    const currentDate = moment().startOf('day').format('YYYY-MM-DD');
     this.toggleExpansion(id);
-    this.props.fetchRanks('Codebrahma', domain, '2017-09-18', 15, 1, 'https://www.google.co.in');
+    this.props.fetchRanks('Codebrahma', domain, currentDate, 15, 1, 'https://www.google.co.in');
   }
 
   onCountDownFinished = () => {
