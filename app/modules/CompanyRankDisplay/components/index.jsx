@@ -1,15 +1,11 @@
 import React from 'react';
-<<<<<<< HEAD
-import _ from 'lodash';
-import { Card, Transition, Divider, Message } from 'semantic-ui-react';
-=======
+
 import { Card, Transition, Divider, Loader, Message } from 'semantic-ui-react';
 
 import returnIfPossible from '../../../helpers/returnIfPossible';
 import Table from '../../common/presentational/Table';
 import CountDownTimer from '../../../helpers/countDownTimer';
 import { getTomorrowDate } from '../../../helpers/getTomorrowDate';
->>>>>>> c6578e965d34c1070344293a273103514dd17572
 
 class CompanyRankDisplay extends React.Component {
 
