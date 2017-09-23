@@ -1,6 +1,15 @@
 import React from 'react';
+<<<<<<< HEAD
 import _ from 'lodash';
 import { Card, Transition, Divider, Message } from 'semantic-ui-react';
+=======
+import { Card, Transition, Divider, Loader, Message } from 'semantic-ui-react';
+
+import returnIfPossible from '../../../helpers/returnIfPossible';
+import Table from '../../common/presentational/Table';
+import CountDownTimer from '../../../helpers/countDownTimer';
+import { getTomorrowDate } from '../../../helpers/getTomorrowDate';
+>>>>>>> c6578e965d34c1070344293a273103514dd17572
 
 class CompanyRankDisplay extends React.Component {
 
@@ -13,19 +22,71 @@ class CompanyRankDisplay extends React.Component {
 
   componentDidMount() {
     this.props.initialFetch();
-    this.props.fetchRanks('Codebrahma', 'React', '2017-09-10', 15, 1, 'https://www.google.co.in');
   }
 
   //Logic to expand one card at a time.
   toggleExpansion(id){
     let { expandedCardID } = this.state;
-    let newCardID = (expandedCardID === id) ? null : id; 
+    let newCardID = (expandedCardID === id) ? null : id;
     this.setState({
       expandedCardID: newCardID
     })
   }
 
-  renderDomains(){  
+  handleCardClick(id, domain){
+    this.toggleExpansion(id);
+    this.props.fetchRanks('Codebrahma', domain, '2017-09-18', 15, 1, 'https://www.google.co.in');
+  }
+
+  onCountDownFinished = () => {
+    window.location.reload();
+  }
+
+  renderDomains(){
+    let { rankData } = this.props;
+    let { expandedCardID } = this.state;
+
+    return this.props.domainData.toJS().map(({id, domain}, index) => {
+      return (
+        <div key={index}>
+          <Card
+            fluid color='teal'
+            header={domain}
+            onClick={() => this.handleCardClick(id, domain)}
+          />
+          <Transition
+            visible={expandedCardID === id}
+            animation='fade down'
+            duration={300}
+          >
+            <div>
+              {
+                returnIfPossible(rankData) ?
+                <Table
+                  data={rankData.toJS()}
+                  width={50}
+                  padding={20}
+                /> :
+                <Loader active inline='centered' />
+              }
+            </div>
+          </Transition>
+          <Divider hidden />
+        </div>
+      );
+    })
+  }
+
+  //Logic to expand one card at a time.
+  toggleExpansion(id){
+    let { expandedCardID } = this.state;
+    let newCardID = (expandedCardID === id) ? null : id;
+    this.setState({
+      expandedCardID: newCardID
+    })
+  }
+
+  renderDomains(){
     return this.props.domainData.toJS().map((domain, index) => {
       return (
         <div>
@@ -49,12 +110,30 @@ class CompanyRankDisplay extends React.Component {
   }
 
   render() {
-    let { isFetched } = this.props;
+    const {
+      isFetched
+    } = this.props;
 
     return (
       <div>
         {
-          isFetched ? this.renderDomains() : "" 
+          isFetched ?
+          <div>
+            <Message info>
+              <Message.Header>
+                Next update will be in&nbsp;
+                <CountDownTimer
+                  targetDate={getTomorrowDate()}
+                  timeSeparator={':'}
+                  leadingZero
+                  onFinished={this.onCountDownFinished}
+                />
+              </Message.Header>
+            </Message>
+
+            { this.renderDomains() }
+          </div> :
+          <Loader active={true} size='large'>Loading</Loader>
         }
       </div>
     );
