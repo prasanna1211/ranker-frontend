@@ -66,6 +66,7 @@ export const getRankData = createSelector([getGap, getNumberOfRecords, getStartD
         ))
         .sort((a, b) => (a.get(0) < b.get(0)))
         .toList();
+      console.log('ret', ret);  
       return ret;
   }
 });

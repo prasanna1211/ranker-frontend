@@ -30,6 +30,7 @@ class CompanyRankDisplay extends React.Component {
   }
 
   handleCardClick(id, domain){
+    console.log('id', id, domain);
     this.toggleExpansion(id);
     this.props.fetchRanks('Codebrahma', domain, '2017-09-18', 15, 1, 'https://www.google.co.in');
   }
@@ -41,6 +42,7 @@ class CompanyRankDisplay extends React.Component {
   renderDomains(){
     let { rankData } = this.props;
     let { expandedCardID } = this.state;
+    console.log('expanded  card id', expandedCardID);
 
     return this.props.domainData.toJS().map(({id, domain}, index) => {
       return (
@@ -66,38 +68,6 @@ class CompanyRankDisplay extends React.Component {
                 <Loader active inline='centered' />
               }
             </div>
-          </Transition>
-          <Divider hidden />
-        </div>
-      );
-    })
-  }
-
-  //Logic to expand one card at a time.
-  toggleExpansion(id){
-    let { expandedCardID } = this.state;
-    let newCardID = (expandedCardID === id) ? null : id;
-    this.setState({
-      expandedCardID: newCardID
-    })
-  }
-
-  renderDomains(){
-    return this.props.domainData.toJS().map((domain, index) => {
-      return (
-        <div>
-          <Card
-            fluid color='teal'
-            key={index}
-            header={domain.domain}
-            onClick={() => this.toggleExpansion(index)}
-          />
-          <Transition visible={this.state.expandedCardID === index} animation='fade down' duration={300}>
-            <Message
-              info
-              header={"Table need to render here"}
-              content={"It is just markup It is just markupIt is just markupIt is just markupIt is just markupIt is just markupIt is just markupIt is just markupIt is just markupIt is just markupIt is just markupIt is just markupIt is just markupIt is just markupIt is just markup"}
-            />
           </Transition>
           <Divider hidden />
         </div>
