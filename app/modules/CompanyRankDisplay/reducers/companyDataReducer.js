@@ -6,6 +6,7 @@ import reduce from 'lodash/reduce';
 import createReducer from '../../../helpers/createReducer';
 
 const commonDataInitialState = Map({
+
 });
 
 const onHtInitialFetchSuccess = (state, { payload }) => {

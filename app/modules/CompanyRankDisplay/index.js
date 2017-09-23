@@ -10,13 +10,14 @@ import {
 
 import {
   getRankData,
+  getFetchStatus,
 } from './selectors/index';
 
 const mapStateToProps = state => {
 	return {
 	  rankData: getRankData(state),
+    fetchStatus: getFetchStatus(state),
 	  domainData: state.getIn(['apiData', 'commonData', 'domainData']),
-	  isFetched: state.getIn(['apiData', 'commonData', 'isFetched'])
 	}
 };
 

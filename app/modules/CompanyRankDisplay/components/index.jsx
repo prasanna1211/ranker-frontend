@@ -1,4 +1,8 @@
 import React from 'react';
+import moment from 'moment';
+
+import map from 'lodash/map';
+import isEmpty from 'lodash/isEmpty';
 
 import { Card, Transition, Divider, Loader, Message } from 'semantic-ui-react';
 
@@ -30,9 +34,9 @@ class CompanyRankDisplay extends React.Component {
   }
 
   handleCardClick(id, domain){
-    console.log('id', id, domain);
+    const currentDate = moment().startOf('day').format('YYYY-MM-DD');
     this.toggleExpansion(id);
-    this.props.fetchRanks('Codebrahma', domain, '2017-09-18', 15, 1, 'https://www.google.co.in');
+    this.props.fetchRanks('Codebrahma', domain, currentDate, 15, 1, 'https://www.google.co.in');
   }
 
   onCountDownFinished = () => {
@@ -40,11 +44,17 @@ class CompanyRankDisplay extends React.Component {
   }
 
   renderDomains(){
-    let { rankData } = this.props;
+    let {
+      rankData,
+      domainData,
+      fetchStatus: {
+        isRanksFetching,
+        isWholePageFetching,
+      },
+    } = this.props;
     let { expandedCardID } = this.state;
-    console.log('expanded  card id', expandedCardID);
-
-    return this.props.domainData.toJS().map(({id, domain}, index) => {
+    console.log('rank data', isWholePageFetching, isRanksFetching, rankData)
+    return map(this.props.domainData.toJS(), ({id, domain}, index) => {
       return (
         <div key={index}>
           <Card
@@ -52,6 +62,7 @@ class CompanyRankDisplay extends React.Component {
             header={domain}
             onClick={() => this.handleCardClick(id, domain)}
           />
+
           <Transition
             visible={expandedCardID === id}
             animation='fade down'
@@ -59,13 +70,15 @@ class CompanyRankDisplay extends React.Component {
           >
             <div>
               {
-                returnIfPossible(rankData) ?
-                <Table
-                  data={rankData.toJS()}
-                  width={50}
-                  padding={20}
-                /> :
-                <Loader active inline='centered' />
+                (isRanksFetching) ? (
+                  <Loader active inline='centered' />
+                ) : (
+                  <Table
+                    data={rankData ? rankData.toJS() : []}
+                    width={50}
+                    padding={20}
+                  />
+                )
               }
             </div>
           </Transition>
@@ -77,29 +90,34 @@ class CompanyRankDisplay extends React.Component {
 
   render() {
     const {
-      isFetched
+      fetchStatus: {
+        isRanksFetching,
+        isWholePageFetching,
+      },
     } = this.props;
 
     return (
       <div>
         {
-          isFetched ?
-          <div>
-            <Message info>
-              <Message.Header>
-                Next update will be in&nbsp;
-                <CountDownTimer
-                  targetDate={getTomorrowDate()}
-                  timeSeparator={':'}
-                  leadingZero
-                  onFinished={this.onCountDownFinished}
-                />
-              </Message.Header>
-            </Message>
+          (isWholePageFetching) ? (
+            <Loader active={true} size='large'>Loading</Loader>
+          ) : (
+            <div>
+              <Message info>
+                <Message.Header>
+                  Updates for today will be completed in &nbsp;
+                  {/* <CountDownTimer
+                    targetDate={getTomorrowDate()}
+                    timeSeparator={':'}
+                    leadingZero
+                    onFinished={this.onCountDownFinished}
+                  /> */}
+                </Message.Header>
+              </Message>
 
-            { this.renderDomains() }
-          </div> :
-          <Loader active={true} size='large'>Loading</Loader>
+              { this.renderDomains() }
+            </div>
+          )
         }
       </div>
     );

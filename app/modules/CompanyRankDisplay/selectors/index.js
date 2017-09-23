@@ -66,7 +66,12 @@ export const getRankData = createSelector([getGap, getNumberOfRecords, getStartD
         ))
         .sort((a, b) => (a.get(0) < b.get(0)))
         .toList();
-      console.log('ret', ret);  
+
       return ret;
   }
+});
+
+export const getFetchStatus = (state) => ({
+  isWholePageFetching: state.getIn(['fetchStatus', 'commonDataStatus', 'isFetching']),
+  isRanksFetching: state.getIn(['fetchStatus', 'companyDataStatus', 'isFetching']),
 });

@@ -7,6 +7,7 @@ import { combineReducers } from 'redux-immutable';
 import { fromJS } from 'immutable';
 
 import apiDataReducer from './modules/common/reducers/apiDataReducer/index.js';
+import fetchStatusReducer from './modules/common/reducers/fetchStatusReducer/index.js';
 
 /**
  * Creates the main reducer with the asynchronously loaded ones
@@ -14,5 +15,6 @@ import apiDataReducer from './modules/common/reducers/apiDataReducer/index.js';
 export default function createReducer(asyncReducers) {
   return combineReducers({
     apiData: apiDataReducer,
+    fetchStatus: fetchStatusReducer,
   });
 }
