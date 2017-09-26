@@ -105,7 +105,7 @@ class CompanyRankDisplay extends React.Component {
             <div>
               <Message info>
                 <Message.Header>
-                  Updates for today will be completed in &nbsp;
+                  Update will be completed in &nbsp;
                   { <CountDownTimer
                       targetDate={getUpdateOccurTime()}
                       timeSeparator={':'}
