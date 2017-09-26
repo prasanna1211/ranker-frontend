@@ -10,29 +10,26 @@ class CountDownTimer extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      remainingTime: 0,
+      remainingTime: null,
       status: COUNTDOWN_NOT_STARTED,
-      intervalId: null
     }
   }
 
   componentDidMount = () => {
-    setTimeout(() => {
-      let timer = setInterval(() => {
+
+      this.tick();
+      this.intervalID = setInterval(() => {
         this.tick()
       }, this.props.interval)
 
       this.setState({
         status: COUNTDOWN_STARTED,
-        intervalId: timer
       })
-
-      this.tick()
-    }, this.props.startDelay)
+      
   }
 
   componentWillUnmount = () => {
-    clearInterval(this.state.intervalId)
+    clearInterval(this.intervalID)
   }
 
   calculateRemainingTime = () => {
@@ -51,7 +48,7 @@ class CountDownTimer extends Component {
       remainingTime: this.calculateRemainingTime()
     })
 
-    if (this.state.remainingTime <= 0) {
+    if (this.state.remainingTime !== null && this.state.remainingTime <= 0) {
       this.setState({
         status: COUNTDOWN_FINISHED
       })
@@ -59,7 +56,8 @@ class CountDownTimer extends Component {
       if (this.props.onFinished) {
         this.props.onFinished()
       }
-      clearInterval(this.state.intervalId)
+
+      clearInterval(this.intervalID)
     }
   }
 

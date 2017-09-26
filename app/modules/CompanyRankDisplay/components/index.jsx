@@ -9,7 +9,7 @@ import { Card, Transition, Divider, Loader, Message } from 'semantic-ui-react';
 import returnIfPossible from '../../../helpers/returnIfPossible';
 import Table from '../../common/presentational/Table';
 import CountDownTimer from '../../../helpers/countDownTimer';
-import { getTomorrowDate } from '../../../helpers/getTomorrowDate';
+import { getUpdateOccurTime } from '../../../helpers/getUpdateOccurTime';
 
 class CompanyRankDisplay extends React.Component {
 
@@ -106,15 +106,14 @@ class CompanyRankDisplay extends React.Component {
               <Message info>
                 <Message.Header>
                   Updates for today will be completed in &nbsp;
-                  {/* <CountDownTimer
-                    targetDate={getTomorrowDate()}
-                    timeSeparator={':'}
-                    leadingZero
-                    onFinished={this.onCountDownFinished}
-                  /> */}
+                  { <CountDownTimer
+                      targetDate={getUpdateOccurTime()}
+                      timeSeparator={':'}
+                      leadingZero
+                      onFinished={this.onCountDownFinished}
+                  /> }
                 </Message.Header>
               </Message>
-
               { this.renderDomains() }
             </div>
           )
