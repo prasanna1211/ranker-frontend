@@ -10,7 +10,7 @@ const Table = ({ data, width, padding }) => {
   const renderRow = (row) => {
     return (
       <td className="cell-value" key={Math.random()}>
-        {row[2] != -1 ? row[2] : 'N/A'}
+        {row[2] != '-1' ? row[2] + 1 : '>30'}
       </td>
     )
   }
@@ -35,7 +35,7 @@ const Table = ({ data, width, padding }) => {
           map(data, (value) => {
             return (
               <tr key={Math.random()} className="row">
-                <td className="row-title">{capitalize(value[0][0])}</td>
+                <td className="row-title">{value[0][0]}</td>
                 {map(value, eachDateData => renderRow(eachDateData))}
               </tr>
             )
